@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+            <!-- Menu Claim Utilisation Glico -->
+
+        <record id="view_cu_form" model="ir.ui.view">
+            <field name="name">account.claim.report.form</field>
+            <field name="model">account.claim.report</field>
+            <field name="arch" type="xml">
+                <form string="Claim Utilization Report">
+                    <header>
+                        <button name="compute"  string="Compute " states="draft" type="object" class="oe_highlight"/>
+                        <button name="cancel_sheet" string="Cancel " states="draft"  type="object"/>
+                        <button name="set_to_draft" string="Set to Draft" states="cancel" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,cancel"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <label for="partner_id"/>
+                                <div><field name="partner_id"/></div>
+                                <label for="date"/>
+                                <div><field name="date"/></div>
+                            </group>
+                            <group>
+                                <label for="date_from"/>
+                                <div><field name="date_from"/></div>
+                                <label for="date_to"/>
+                                <div><field name="date_to"/></div>
+                            </group>
+                            <group>
+                                <field name="number"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Claim Utilization Report Lines">
+                                <field name="line_ids" colspan="4" nolabel="1">
+                                    <tree string="claim Lines" editable="bottom">
+                                        <field name="partner_name"/>
+										<field name="date_submtd"/>
+										<field name="claim_ref"/>
+                                        <field name="amount_submtd" sum="Amount Submited"/>
+                                        <field name="amount_apprvd" sum="Amount Approved"/>
+                                        <field name="amount_paid" sum="Amount Paid"/>
+										<field name="date_paid"/>
+                                        <field name="voucher_no"/>
+                                        <field name="check_no"/>
+                                        <field name="bank"/>
+                                        <field name="tax_deduct" sum="Tax Deduct"/>
+                                        <field name="paid_by"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_cu_tree" model="ir.ui.view">
+            <field name="name">account.claim.report.tree</field>
+            <field name="model">account.claim.report</field>
+            <field name="arch" type="xml">
+                <tree string="Claim Utilization Report">
+                    <field name="number"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_account_claim_report_filter" model="ir.ui.view">
+            <field name="name">account.claim.report.select</field>
+            <field name="model">account.claim.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Claim Report">
+                    <group>
+                        <filter string="Draft" name="draft" domain="[('state','=','draft')]" help="Draft claim Report"/>
+                        <filter string="Confirm" name="confirm" domain="[('state','=','confirm')]" help="Confirm Claim Report"/>
+                        <separator orientation="vertical"/>
+                        <field name="partner_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="state" context="{'group_by':'state'}"/>
+                        <separator orientation="vertical" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_account_claim_report_line_form" model="ir.ui.view">
+            <field name="name">account.claim.report.line.form</field>
+            <field name="model">account.claim.report.line</field>
+            <field name="arch" type="xml">
+                <form string="Claim Shedule Report Lines">
+                    <sheet>
+                    <label for="claim_report_id" class="oe_edit_only"/>
+                    <h1><field name="claim_report_id"/></h1>
+                        <group>
+                            <field name="partner_name"/>
+                            <field name="claim_ref"/>
+                            <field name="date_submtd"/>
+                            <field name="amount_submtd"/>
+                            <field name="amount_apprvd"/>
+                            <field name="amount_paid"/>
+                            <field name="date_paid"/>
+                            <field name="voucher_no"/>
+                            <field name="check_no"/>
+                            <field name="bank"/>
+                            <field name="tax_deduct"/>
+                            <field name="paid_by"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="paperformat_landscape" model="report.paperformat">
+            <field name="name">PF Landscape</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">3</field>
+            <field name="dpi">90</field>
+        </record>    
+
+        <report
+            id="claim_report"
+            model="account.claim.report" 
+            string="Print claim Report"
+            report_type="qweb-pdf"
+            name="client_pi.report_claim" 
+            file="client_pi.report_claim"
+            paperformat="client_pi.paperformat_landscape"/>
+
+
+        <!-- To create view report claim utilization-->
+
+        <record model="ir.actions.act_window" id="action_account_report_partner_ledger_CU1">
+          <field name="name">Claim Utilization Report</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">account.claim.report</field>
+          <field name="view_mode">tree,form</field>
+          <field name="search_view_id" ref="client_pi.view_account_claim_report_filter"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a Claim Utilization Report
+              </p><p>
+                Create a Claim Utilization Report.
+              </p>
+            </field>
+        </record>    
+
+        <record model="ir.actions.act_window.view" id="action_account_report_partner_ledger_CU_form">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_cu_form"/>
+            <field name="act_window_id" ref="action_account_report_partner_ledger_CU1"/>
+        </record>
+
+        <record id="action_account_report_partner_ledger_CU1_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_cu_tree"/>
+            <field name="act_window_id" ref="action_account_report_partner_ledger_CU1"/>
+        </record>  
+
+        <menuitem 
+            id="menu_action_account_report_partner_ledger_CU1" 
+            name="Claim Utilization" 
+            action="action_account_report_partner_ledger_CU1" 
+            parent="account_reports.account_reports_partners_reports_menu" 
+            groups="account.group_account_user"
+            sequence="1"
+            />       
+                      
+
+    </data>
+
+</odoo>

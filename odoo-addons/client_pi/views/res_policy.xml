@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_policy_form" model="ir.ui.view">
+            <field name="name">view.policy.form</field>
+            <field name="model">res.policy</field>
+            <field name="arch" type="xml">
+                <form string="Policy">
+                    <sheet>
+                        <group>
+                            <group>
+                                <label for="poli_num"/>
+                                <div><field name="poli_num"/></div>
+                                <label for="partner_id"/>
+                                <div><field name="partner_id"/></div>
+                                <label for="status_pol"/>
+                                 <div><field name="status_pol"/></div>
+                            </group>
+                            <group>
+                                <label for="startDate"/>
+                                <div><field name="startDate"/></div>
+                                <label for="endDate"/>
+                                <div><field name="endDate"/></div>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Policies Id">
+                                <field name="line_ids" colspan="4" nolabel="1">
+                                    <tree  string="Policies" editable="bottom">
+        
+                                        <field name="poli_id"/>
+                                        <field name="policy_id"/>
+                                        <field name="startDate"/>
+                                        <field name="expiryDate" />
+                                        <field name="duration" />
+                                        <field name="unit" />
+                                        <field name="remark" />
+                                        
+                                        <!-- Others fields -->
+                                        <!-- <field name="partner_id" invisible="1"/> -->
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_policy_line_form" model="ir.ui.view">
+            <field name="name">view.policy.line.form</field>
+            <field name="model">res.policy.line</field>
+            <field name="arch" type="xml">
+                <form string="Policy ID">
+                    <sheet>
+                        <group>
+                            <group>
+                                <label for="poli_id"/>
+                                <div><field name="poli_id"/></div>
+                                <label for="policy_id"/>
+                                <div><field name="policy_id"/></div>
+                                <label for="remark"/>
+                                 <div><field name="remark"/></div>
+                            </group>
+                            <group>
+                                <label for="startDate"/>
+                                <div><field name="startDate"/></div>
+                                <label for="expiryDate"/>
+                                <div><field name="expiryDate"/></div>
+                                <label for="duration"/>
+                                <div><field name="duration"/></div>
+                                <label for="unit"/>
+                                <div><field name="unit"/></div>
+                            </group>
+                        </group>
+                    </sheet>
+                    <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_policy_tree" model="ir.ui.view">
+            <field name="name">view.policy.tree</field>
+            <field name="model">res.policy</field>
+            <field name="arch" type="xml">
+                <tree string="Policy">
+                    <field name="poli_num"/>
+                    <field name="partner_id"/>
+                    <field name="startDate"/>
+                    <field name="endDate"/>
+                    <field name="status_pol"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_policy_filter" model="ir.ui.view">
+            <field name="name">view.policy.select</field>
+            <field name="model">res.policy</field>
+            <field name="arch" type="xml">
+                <search string="Search Policy">
+                    <group>
+                        <field name="poli_num"/>
+                        <field name="partner_id"/>
+                        <field name="startDate"/>
+                        <field name="endDate"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Policy Number" name="poli_num"/>
+                        <filter string="Partner" name="partner_id"/>
+                        <filter string="Start Date" name="startDate"/>
+                        <filter string="End Date" name="endDate"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By">
+                        <filter string="policy number" name="poli_num" context="{'group_by':'poli_num'}"/>
+                        <filter string="start date" name="startDate" context="{'group_by':'startDate'}"/>
+                        <filter string="end date" name="endDate" context="{'group_by':'endDate'}"/>
+                        <separator orientation="vertical" />
+                    </group>
+                </search>
+            </field>
+        </record>
+<!-- 
+        <record id="paperformat_landscape" model="report.paperformat">
+            <field name="name">PF Landscape</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">25</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">3</field>
+            <field name="dpi">90</field>
+        </record>    
+
+        <report
+            id="deferred_report"
+            model="deferred.report" 
+            string="Print Deferred Report"
+            report_type="qweb-pdf"
+            name="client_pi.report_deferred" 
+            file="client_pi.report_deferred"
+            paperformat="client_pi.paperformat_landscape"/> -->
+    
+
+
+        <record model="ir.actions.act_window" id="action_view_policy">
+          <field name="name">View Policy</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">res.policy</field>
+          <field name="view_mode">tree,form</field>
+          <field name="search_view_id" ref="client_pi.view_policy_filter"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a Policy
+              </p><p>
+                Create a Policy.
+              </p>
+            </field>
+        </record>    
+
+        <record model="ir.actions.act_window.view" id="action_view_policy_form">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_policy_form"/>
+            <field name="act_window_id" ref="action_view_policy"/>
+        </record>
+
+        <record id="action_view_policy_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_policy_tree"/>
+            <field name="act_window_id" ref="action_view_policy"/>
+        </record>  
+
+        <menuitem 
+            id="menu_action_view_policy" 
+            name="Policy" 
+            action="action_view_policy" 
+            parent="account.menu_finance_receivables" 
+            groups="client_pi.premiums"
+            sequence="10"
+            />       
+               
+    </data>
+</odoo>

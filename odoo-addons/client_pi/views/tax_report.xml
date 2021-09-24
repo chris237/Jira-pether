@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_tax_r_tree" model="ir.ui.view">
+            <field name="name">account.tax.r.tree</field>
+            <field name="model">account.tax.r</field>
+            <field name="arch" type="xml">
+                <tree string="Tax Report">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <field name="number"/>
+                    <field name="month"/>
+                    <field name="year"/>
+                    <field name="type_report"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tax_r_form" model="ir.ui.view">
+            <field name="name">account.tax.r.form</field>
+            <field name="model">account.tax.r</field>
+            <field name="arch" type="xml">
+                <form string="Tax Report Schedule">
+                    <header>
+                        <button name="compute" string="Compute " states="draft" type="object" class="oe_highlight"/>
+                        <button name="cancel_sheet" string="Cancel " states="confirm" type="object"/>
+                        <button name="set_to_draft" string="Set to Draft" states="cancel" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,cancel"/>
+                        <div class="oe_clear"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <label for="Name" class="oe_edit_only" string="Name"/>
+                            <h2><field name="name"/></h2>
+                            <label for="date" class="oe_edit_only"/>
+                            <group colspan="1" col="3">
+                                <field name="type_report"/>
+                                <field name="date"/>
+                                <field name="month"/>
+                                <field name="year"/>
+                                <field name="number"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Tax Scedule Report Lines">
+                                <field name="line_ids" colspan="4" nolabel="1">
+                                    <tree string="Tax Lines" editable="bottom">
+                                        <field name="date"/>
+                                        <field name="partner_id"/>
+                                        <field name="move"/>
+                                        <field name="amount_app"/>
+                                        <field name="tax"/>
+                                        <field name="amount_paid" sum="Amount Paid"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                        <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_tax_r_claims" model="ir.actions.act_window">
+            <field name="name">Tax Report Shedule</field>
+            <field name="res_model">account.tax.r</field>
+			<field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_tax_r_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Tax Report Schedule
+              </p><p>
+                Create Tax Report Schedule.
+              </p>
+            </field>
+        </record>
+
+        <record id="portrait_tax" model="report.paperformat">
+            <field name="name">summary Sheet</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">3</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+            id="tax_r"
+            model="account.tax.r" 
+            string="Print Tax Report Schedule"
+            report_type="qweb-pdf"
+            name="client_pi.reporttax" 
+            file="client_pi.reporttax"
+            paperformat="client_pi.portrait_tax"/>
+
+        <menuitem
+            id="account_tax_rep"
+            name="Tax Report Schedule"
+            parent="account_reports.account_reports_partners_reports_menu"
+            action="action_tax_r_claims"
+            groups="account.group_account_user"
+            sequence="10"/> 
+
+
+    </data>
+</odoo>

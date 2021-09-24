@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+    <template id="report_assets_common1" name="payroll_customisation" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">  
+            <link rel="stylesheet" type="text/scss" href="/payroll_customisation/static/src/scss/payment_voucher.scss"/>
+        </xpath>
+    </template>
+
+    <template id="pv_payroll">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="page1">
+                            <p class="text-center titrepv"><strong><B>PAYMENT VOUCHER PAYROLL</B></strong></p>
+                            <div class="container">
+                                <div class="row ligne">
+                                    <div class="col-6"></div>
+                                    <div class="col-3" style="text-transform: uppercase;" t-if="o.pv_num">Payment voucher NO : </div>
+                                    <div class="col-3 text-right"><span class="text-right" style="text-transform: uppercase;" t-field="o.pv_num"/></div>
+                                </div>
+                                <div class="row ligne">
+                                    <div class="col-6"></div>
+                                    <div class="col-3" style="text-transform: uppercase;"  t-if="o.pv_num">Invoice/bill NO : </div>
+                                    <div class="col-3 text-right" style="text-transform: uppercase;"></div>
+                                </div>
+                                <div class="row ligne">
+                                    <div class="col-6" style="text-transform: uppercase;"  t-if="o.payee">Payee's Name : <span class="text-right" t-field="o.payee"/></div>
+                                    <div class="col-3" style="text-transform: uppercase;" t-if="o.payment_date">Date : </div>
+                                    <div class="col-3 text-right" style="text-transform: uppercase;"><span class="text-right" t-field="o.payment_date"/></div>
+                                </div>
+                                <div class="row ligne">
+                                    <div class="col-6" style="text-transform: uppercase;" t-if="o.prepa">Prepared by : <span class="text-right" t-field="o.prepa"/></div>
+                                    <div class="col-3" style="text-transform: uppercase;"  t-if="o.payement_mode">Payment Mode : </div>
+                                    <div class="col-3 text-right" style="text-transform: uppercase;"><span class="text-right" t-field="o.payement_mode"/></div>
+                                </div>
+                                <div class="row ligne">
+                                    <div class="col-6" style="text-transform: uppercase;" t-if="o.currency">Currency : <span class="text-right" t-field="o.currency"/></div>
+                                    <div class="col-3" style="text-transform: uppercase;"  t-if="o.amount">Amount : </div>
+                                    <div class="col-3 text-right" style="text-transform: uppercase;"><span class="" t-field="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency}"/></div>
+                                </div>
+                            </div>
+                            <br/>
+                            <p class="trait"><strong><B>......................................................................................................................................................................................................................................................</B></strong></p>
+                            <br/>
+                            <div class="container">
+                                <div class="row ligne">
+                                    <div class="col-6" style="text-transform: uppercase;">Naration : <span class="text_com" t-field="o.narration"/></div>  
+                                    <div class="col-3" style="text-transform: uppercase;">Amount Paid/Recvd: </div>
+                                    <div class="col-3 text-right" style="text-transform: uppercase;"><span t-field="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency}"/></div>
+                                </div>
+                                <div class="row ligne">
+                                    <div class="col-4" style="text-transform: uppercase;">Bank : <span class="pv6" t-field="o.bank"/></div>
+                                    <div class="col-4" style="text-transform: uppercase;">Cheque No : <span class="pv7" t-field="o.check_number"/></div>
+                                    <div class="col-4" style="text-transform: uppercase;">Cheque Date: <span class="pv8" t-field="o.date_cheque"/></div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-3" style="text-transform: uppercase;">AMOUNT IN WORDS : </div>
+                                    <div class="col-9" style="text-transform: uppercase;" t-if="o.amount_words"><STRONG class="text_words"><span t-field="o.amount_words"/></STRONG></div>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <p class="text-center"><strong><B>FOR ACCOUNTS DEPARTMENT USE ONLY</B></strong></p>
+                            
+                            <br/>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>SERVICE TYPE</th>
+                                        <th class="text-center">ACCOUNT TO BE DEBITED</th>
+                                        <th class="text-center">AMOUNT</th>
+                                        <th class="text-center">ACCOUNT TO BE CREDITED</th>
+                                        <th class="text-center">AMOUNT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td>
+                                        <span>SALARIES PAYABLE</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span>200205</span>
+                                    </td>
+                                    <td  class="text-center">
+                                        <span t-field="o.amount"/>
+                                    </td> 
+                                    <td class="text-center">
+                                        <span>110202</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="o.amount"/>
+                                    </td>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">PREPARED BY : <span style="text-transform:uppercase;" t-field="o.prepa"/></div>
+                                    <div class="col-4 text-right">VERIFIED BY : <span style="text-transform:uppercase;" t-field="o.verifyiud"/></div>
+                                    <div class="col-4 text-right">APPROVED BY: CEO</div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4 mb4"> <img t-if="o.sign_prep" t-att-src="image_data_uri(o.sign_prep)" style="max-height: 100px;" alt="Prepare signature"/> </div>
+                                    <div class="col-4 mb4 trait1 text-right"> <img t-if="o.sign_verif" t-att-src="image_data_uri(o.sign_verif)" style="max-height: 100px;" alt="Verify signature"/></div>
+                                    <div class="col-4 mb4 trait1 text-right"> <img t-if="o.sign_appro" t-att-src="image_data_uri(o.sign_appro)" style="max-height: 100px;" alt="Verify signature"/> </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4 trait1">..............................................................</div>
+                                    <div class="col-4 trait1 text-right">................................................................</div>
+                                    <div class="col-4 trait1 text-right">............................................................</div>
+                                </div>
+                            </div>  
+                        </div>                  
+                    </div> 
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>        

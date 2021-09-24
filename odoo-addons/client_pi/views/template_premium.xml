@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_common_premium" name="web_report_premium" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">  
+            <link rel="stylesheet" type="text/scss" href="/client_pi/static/src/scss/report_premium.scss"/>
+        </xpath>
+    </template>
+    
+    <!-- template premium report -->
+    <template id="report_premium">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="page1">
+                            <div class="">
+                                <p class="text-center titlePremium">
+                                    <strong><B>REPORT ON WRITTEN PREMIUMS</B></strong>
+                                </p>
+                            </div>
+                            <table class="table1">
+                                <tr>
+                                    <td>
+                                        <p class="text-justify">Date :
+                                            <strong class="named"><span t-esc="o.date"/></strong>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="text-justify ref">Reference :
+                                            <strong class="namer"><span t-esc="o.number"/></strong>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table class="table3">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;">Name of policy</th>
+                                        <!-- <th>Amount</th>
+                                        <th>Credit Note</th> -->
+                                        <th>Net Invoice</th>
+                                        <th>Invoice Month</th>
+                                        <th>Jan</th>
+                                        <th>Feb</th>
+                                        <th>March</th>
+                                        <th>April</th>
+                                        <th>May</th>
+                                        <th>June</th>
+                                        <th>July</th>
+                                        <th>Aug</th>
+                                        <th>Sept</th>
+                                        <th>Oct</th>
+                                        <th>Nov</th>
+                                        <th>Dec</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                        <td style="text-align: left;">
+                                            <span t-esc="l['name_policy']"/>
+                                        </td>
+                                        <!-- <td>
+                                            <span t-esc="l['amount']"/>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['credit_note']!=0"><span t-esc="l['credit_note']"/></t> 
+                                            <t t-elif="l['credit_note']==0"><span></span></t>
+                                        </td>  -->
+                                        <td>
+                                            <span t-esc="'{0:,.2f}'.format(l['net_invoice'])"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="l['invoice_month']"/>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['jan_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['jan_pay'])"/></t> 
+                                            <t t-elif="l['jan_pay']==0"><span></span></t>    
+                                        </td>
+                                        <td>
+                                            <t t-if="l['feb_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['feb_pay'])"/></t> 
+                                            <t t-elif="l['feb_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['march_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['march_pay'])"/></t> 
+                                            <t t-elif="l['march_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['april_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['april_pay'])"/></t> 
+                                            <t t-elif="l['april_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['may_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['may_pay'])"/></t> 
+                                            <t t-elif="l['may_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['june_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['june_pay'])"/></t> 
+                                            <t t-elif="l['june_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['july_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['july_pay'])"/></t> 
+                                            <t t-elif="l['july_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['aug_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['aug_pay'])"/></t> 
+                                            <t t-elif="l['aug_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['sept_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['sept_pay'])"/></t> 
+                                            <t t-elif="l['sept_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['oct_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['oct_pay'])"/></t> 
+                                            <t t-elif="l['oct_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['nov_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['nov_pay'])"/></t> 
+                                            <t t-elif="l['nov_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['dec_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['dec_pay'])"/></t> 
+                                            <t t-elif="l['dec_pay']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['bal_pay']!=0"><span t-esc="'{0:,.2f}'.format(l['bal_pay'])"/></t> 
+                                            <t t-elif="l['bal_pay']==0"><span></span></t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong ><B>TOTAL :</B></strong>
+                                        </td>
+                                        <!-- <td>
+                                            <B><strong><span t-esc="get_total_amount()" /></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="get_total_credit_note()"/></strong></B>
+                                        </td> -->
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_net_invoice())"/></strong></B>
+                                        </td>
+                                        <td colspan="1"/>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_jan_pay())" /></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_feb_pay())"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_march_pay())"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_april_pay())" /></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_may_pay())"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_june_pay())"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_july_pay())" /></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_aug_pay())"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_sept_pay())"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_oct_pay())" /></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_nov_pay())"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_dec_pay())"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_bal_pay())"/></strong></B>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <!-- <p class="mt32" align="right">Yours faithfully,</p> -->
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- template summary report -->
+    <template id="report_summary">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="page1">
+                            <div class="">
+                                <p class="text-center titlePremium">
+                                    <strong> SUMMARY REPORT FOR  <span style="text-transform:uppercase;" t-esc="o.mois"/>  2021</strong>
+                                </p>
+                            </div>
+                            <table class="table1">
+                                <tr>
+                                    <td>
+                                        <p class="text-justify">Date :
+                                            <strong class="named"><span t-esc="o.date"/></strong>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="text-justify ref">Reference :
+                                            <strong class="namer"><span t-esc="o.number"/></strong>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table class="table2_sum" style="width: 1000px;">
+                                <thead>
+                                    <tr style="">
+                                        <th>Name of policy</th>
+                                        <th>Premium Received</th>
+                                        <th>Individual Enrol</th>
+                                        <th>Written Prem./quotes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.sum_line_ids)" t-as="l">
+                                        <td>
+                                            <span t-esc="l['name_policy']"/>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['prem_r']!=0"><span t-esc="l['prem_r']"/></t> 
+                                            <t t-elif="l['prem_r']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['ind_enr']!=0"><span t-esc="l['ind_enr']"/></t> 
+                                            <t t-elif="l['ind_enr']==0"><span></span></t>
+                                        </td > 
+                                        <td>
+                                            <span t-esc="l['written_prem']"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong ><B>TOTAL :</B></strong>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="get_total_pr()" /></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="get_total_ind()"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="get_total_w()"/></strong></B>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <!-- <p class="mt32" align="right">Yours faithfully,</p> -->
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

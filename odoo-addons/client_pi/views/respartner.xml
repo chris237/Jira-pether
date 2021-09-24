@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="invoice_import_sp_PI" model="ir.ui.view">
+            <field name="name">partner.view.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="11"/>
+            <field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button 
+                        class="oe_highlight" 
+                        type="object" 
+                        name="fetch" 
+                        attrs="{'invisible': [('is_company', '!=', True)]}"
+                        icon="fa-file-text"
+                        groups="client_pi.claims"
+                        context="{'default_partner_id': active_id, 'is_company': True, 'supplier_rank': '1'}">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_text">PI Bills</span>
+                        </div>
+                    </button>
+                </div>
+            </field>
+        </record>
+
+        <record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+            <field name="context">{'search_default_supplier': 1, 'default_is_supplier': True}</field>
+        </record>
+
+        <record id="invoice_import_PI" model="ir.ui.view">
+            <field name="name">partner.view.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="11"/>
+            <field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside" >
+                    <button 
+                        class="oe_stat_button" 
+                        type="object" 
+                        attrs="{'invisible': [('is_company', '!=', True)]}"
+                        name="fetch_prem"
+                        icon="fa-file-text" 
+                        groups="client_pi.premiums"
+                        >
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_text">PI Invoices</span>
+                        </div>
+                    </button>
+                </div>
+            </field>
+        </record>
+        
+        <record id="view_vendors_tax" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="vat" position="before">
+                    <field name="bank_name"/>
+                    <field name="branch"/>
+                    <field name="account_n"/>
+                    <field name="is_pro"/>
+                </field>
+                <field name="property_supplier_payment_term_id" position="after">
+                    <field name="tax_appl"/>
+                    <field name="withtax"/>
+                </field>
+                <page name="sales_purchases" position="before">
+                    <page name="beneficiary_info" string="Beneficiary information" groups="sales_team.group_sale_manager" attrs="{'invisible': [('is_company', '=', True)]}" >
+                        <group>
+                            <group>
+                                <field name="poli_num" string="Group code"/>
+                                <field name="extbenid" string="Policy number"/>
+                                <field name="status_pol" />
+                                <field name="startDate" />
+                            </group>
+                            <group>
+                                <field name="paka" />
+                                <field name="principal1" />
+                                <field name="enrolleeid" />
+                                <field name="relation_id" />
+                                <field name="sex" />
+                                <field name="dob" />
+                                <field name="bloodgroup" />
+                            </group>
+                        </group>
+                    </page>
+                </page>
+                <xpath expr="//form/sheet/notebook/page[1]/field[@name='child_ids']/kanban/templates/t[@t-name='kanban-box']/div/div[@class='oe_kanban_details']" position="replace" >
+                    <div class="oe_kanban_details">
+                        <b style="font-size: 18px;"><field name="name"/></b>
+                        <div t-if="record.function.raw_value"><b>Function: </b><field name="function"/></div>
+                        <div t-if="record.email.raw_value"><b>Email: </b><field name="email" widget="email"/></div>
+                        <div t-if="record.type.raw_value != 'contact'">
+                            <div>
+                                <field name="zip"/>
+                                <field name="city"/>
+                            </div>
+                            <field t-if="record.state_id.raw_value" name="state_id"/>
+                            <field name="country_id"/>
+                        </div>
+                        <div t-if="record.phone.raw_value"><b>Phone: </b><field name="phone" widget="phone"/></div>
+                        <!-- <div t-if="record.mobile.raw_value">Mobile: <field name="mobile" widget="phone"/></div> -->
+                        <div t-if="record.poli_num.raw_value"><b>Group code: </b><field name="poli_num"/></div>
+                        <div t-if="record.extbenid.raw_value"><b>Policy number: </b><field name="extbenid"/></div>
+                        <div t-if="record.status_pol.raw_value"><b>Policy status: </b><field name="status_pol"/></div>
+                        <div t-if="record.paka.raw_value"><b>Package: </b><field name="paka"/></div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="context">{'search_default_customer': 1,'res_partner_search_mode': 'customer', 'default_is_company': True, 'default_customer_rank': 1,'is_pro': True}</field>
+        </record>
+
+        <!-- <record id="view_res_partner_filter" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter" />
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="extbenid"/>
+                </field>
+            </field>
+        </record> -->
+
+    </data>
+
+</odoo>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="journal_entries_report_id">
+        <t t-call="web.html_container">
+		<t t-call="web.external_layout">
+			<t t-foreach="docs" t-as="o">
+                <div class="page" style="font-size:15px;">
+                <div align="center">
+					<h3>
+						Journal Entry of <span t-field="o.journal_id.name"/></h3><br/><span t-field="o.name"/>
+				</div>
+				<br/>
+                	<div class="row">
+	            			<table width="100%" class="table-bordered">
+							   
+	            				<tr>
+	            					<td>Reference: <span t-field="o.ref"/>
+	            					</td>
+	            					<td>
+	            						Date: <span t-field="o.date"/>
+	            					</td>
+	            				</tr>
+	            				<tr>
+	            					<td>
+	            						Partner: <span t-field="o.partner_id.name"/>
+	            					</td>
+	            					<td>
+	            						Cheque Number: <span t-field="o.che"/>
+	            					</td>
+	            				</tr>
+	            			</table>                	
+                	</div>
+                	<div class="row">
+                    <style>
+                    .tblbordr {
+                        text-align: center;
+                        border: 2px solid black;
+                    }
+                    </style>
+						<br></br>
+                		<table class="table table-bordered" border="3" style="margin-bottom:700px;font-size:12px;">
+                			<thead >
+                				<tr >
+                					<th>Account</th>
+                					<th width="100px">Date</th>
+                					<th width="100px">Partner</th>
+                					<th width="100px">Lable</th>
+                					<th class="text-right">Debit</th>
+                					<th class="text-right">Credit</th>
+                				</tr>
+                			</thead>
+                			<tbody>
+                				 <t t-foreach="o.line_ids.sorted(key=lambda r: r.credit, reverse=True)" t-as="line">
+                				 	<tr>
+                				 		<td>
+                				 			<span t-field="line.account_id.code"/>
+                				 			<span t-field="line.account_id.name"/>
+                				 		</td>
+                				 		<td width="100px">
+                				 			<span t-field="line.date"/>
+                				 		</td>
+                				 		<td width="100px">
+                				 			<span t-field="line.partner_id.name"/>
+                				 		</td>
+                				 		<td width="100px">
+                				 			<span t-field="line.name"/>
+                				 		</td>
+                				 		<td class="text-right">
+                				 			<span t-field="line.debit"/>
+                				 			
+                				 		</td>
+                				 		<td class="text-right">
+                				 			<span t-field="line.credit"/>
+                				 			
+                				 		</td>
+                				 	</tr>
+                				 </t>
+                			</tbody>
+							<tfooter>
+                				<tr>
+                					<td colspan="4" align ="right"><STRONG>TOTAL</STRONG></td>
+                					<td align="right">
+                						<span t-esc="o.total_debit_credit().get('dr_total')"
+                						t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                					</td>
+									<td align="right">
+                						<span t-esc="o.total_debit_credit().get('cr_total')"
+                						t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                					</td>
+                				</tr>
+                			</tfooter> 
+                		</table>
+                	</div>
+                </div>
+            </t>
+			</t>
+        </t>
+    </template>
+
+</odoo>
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_journal_entry">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <h2>Journl Entry</h2>
+                    <table class="table table-sm">
+                        <tr>
+                            <td><strong>NARRATION </strong></td>
+                            <td><span t-field="o.ref"/></td>
+                            <td><strong>Accounting Date</strong></td>
+                            <td><span t-field="o.date"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Check Number</strong></td>
+                            <td><span t-field="o.che"/></td>
+                            <td><strong>Journal</strong></td>
+                            <td><span t-field="o.journal_id"/></td>
+                        </tr>                                              
+                    </table>
+
+                    <div style="border-bottom: 1px solid black;"/>
+
+                    <table class="table table-sm">
+                        <thead>
+                            <tr style="border-top: 1px solid black">
+                                <th>ACCOUNT</th>
+                                <th>Partner</th>
+                                <th>LABEL</th>
+                                <th>DEBIT</th>
+                                <th>CREDIT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                <td>
+                                  <span t-esc="l['account_id']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="l['partner_id']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="l['name']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="l['debit']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                                 <td>
+                                    <span t-esc="l['credit']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo> -->
