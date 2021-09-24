@@ -1,0 +1,4 @@
+[submodule "chris237/Jira-pether"]
+	path = chris237/Jira-pether
+	url = git@github.com:chris237/Jira-pether.git
+	branch = dev
