@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_model_clientpi_submitsheet_user","clientpi.submitsheet","model_clientpi_submitsheet","hr_payroll.group_hr_payroll_user",1,1,1,1
+"access_model_clientpi_submitsheet_line_user","clientpi.submitsheet.line","model_clientpi_submitsheet_line","hr_payroll.group_hr_payroll_user",1,1,1,1
+"access_model_pv","hr.pv","model_hr_pv","hr_payroll.group_hr_payroll_user",1,1,1,0
+"access_model_account","hr.acc","model_hr_acc","hr_payroll.group_hr_payroll_user",1,1,1,1
+"access_model_contribution","hr.contribution","model_hr_contribution","hr_payroll.group_hr_payroll_user",1,1,1,1
+"access_model_contribution_line_user","hr.contribution.line","model_hr_contribution_line","hr_payroll.group_hr_payroll_user",1,1,1,1

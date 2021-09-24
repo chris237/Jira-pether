@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="journal_entries_moce_print_id"
+            model = "account.move"
+            string = "Journal Entries"
+            report_type = "qweb-pdf"
+            name = "client_pi.journal_entries_report_id"  
+            file = "client_pi.journal_entries_report_id"
+        />
+    </data>
+</odoo>

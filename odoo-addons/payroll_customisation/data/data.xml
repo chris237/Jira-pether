@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="tier1" model="ir.sequence">
+            <field name="name">Sequence tier 1</field>
+            <field name="code">tier1.contribution</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="tier2" model="ir.sequence">
+            <field name="name">Sequence tier 2</field>
+            <field name="code">tier2.contribution</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="tier3" model="ir.sequence">
+            <field name="name">Sequence tier 3</field>
+            <field name="code">tier3.contribution</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="si" model="ir.sequence">
+            <field name="name">Sequence Staff Invest</field>
+            <field name="code">si.contribution</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="payee" model="ir.sequence">
+            <field name="name">Sequence Payee</field>
+            <field name="code">payee.contribution</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="slip" model="ir.sequence">
+            <field name="name">Sequence STAFF LIFE POLICY PREMIUM</field>
+            <field name="code">slip.contribution</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="gw" model="ir.sequence">
+            <field name="name">Sequence GLICO STAFF WELFARE FUND</field>
+            <field name="code">gw.contribution</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="ld" model="ir.sequence">
+            <field name="name">Sequence LOAN DEDUCTION</field>
+            <field name="code">ld.contribution</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+
+
+       
+    </data>
+    
+
+</odoo>

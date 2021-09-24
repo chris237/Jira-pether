@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_tax" model="ir.sequence">
+            <field name="name">Tax Report</field>
+            <field name="code">payment.tax</field>
+            <field name="padding">3</field>
+        </record>
+
+        <record forcecreate="True" id="confirm_paid_bill" model="ir.cron">
+            <field name="name">Confirm Paid Bill</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="active">False</field>
+            <field name="code">model.bill_processed()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record forcecreate="True" id="fetch_policy" model="ir.cron">
+            <field name="name">Fetch Policy</field>
+            <field name="model_id" ref="model_res_policy"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="active">True</field>
+            <field name="code">model.fetch_policy()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record forcecreate="True" id="fetch_bene" model="ir.cron">
+            <field name="name">Fetch Beneficiary</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="active">True</field>
+            <field name="code">model.get_bene()</field>
+            <field name="interval_number">5</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <!-- <record forcecreate="True" id="confirm_fetch_claim" model="ir.cron">
+            <field name="name">Confirm Fetch claims</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.claims_processed()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record> -->
+
+        <!-- <record forcecreate="True" id="fetch_bene" model="ir.cron">
+            <field name="name">Fetch Beneficiary</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_bene1()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record> -->
+
+        <record forcecreate="True" id="fetch_sucri" model="ir.cron">
+            <field name="name">Fetch Suscribers</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_suscribers()</field>
+            <field name="interval_number">60</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+        <!-- <record forcecreate="True" id="fetch_BILL" model="ir.cron">
+            <field name="name">Fetch Bills of Day</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.generate_bil()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record> -->
+
+        <record forcecreate="True" id="fetch_package" model="ir.cron">
+            <field name="name">Fetch Package</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_package()</field>
+            <field name="interval_number">60</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record forcecreate="True" id="fetch_prod" model="ir.cron">
+            <field name="name">Fetch Product</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_productcat()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record forcecreate="True" id="fetch_sp" model="ir.cron">
+            <field name="name">Fetch Services Providers</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_sp()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+        <!-- <record forcecreate="True" id="desac_poli" model="ir.cron">
+            <field name="name">Desaction Policies </field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_sp()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record> -->
+    </data>
+</odoo>    

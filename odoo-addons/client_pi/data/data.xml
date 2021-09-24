@@ -1,0 +1,91 @@
+<odoo>
+    <data>
+        <record id="account.account_payment_method_manual_in" model="account.payment.method">
+            <field name="name">Bank Transfer</field>
+        </record>
+        <record id="account.account_payment_method_manual_out" model="account.payment.method">
+            <field name="name">Bank Transfer</field>
+        </record>
+        <record id="account_check_printing.account_payment_method_check" model="account.payment.method">
+            <field name="name">Cheque</field>
+        </record>
+        <record id="account_payment_method_cheque" model="account.payment.method">
+            <field name="name">Cheque</field>
+            <field name="code">check_printing</field>
+            <field name="payment_type">inbound</field>
+        </record>
+        
+        <record id="payment_claim_seq" model="ir.sequence">
+            <field name="name">Payment Claim</field>
+            <field name="code">payment.claim</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+        <record id="ledger_seq" model="ir.sequence">
+            <field name="name">Ledger Report</field>
+            <field name="code">ledger.report</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+        <record id="deferred_seq" model="ir.sequence">
+            <field name="name">Deferred Report</field>
+            <field name="code">deferred.report</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+        <record id="revenue_seq" model="ir.sequence">
+            <field name="name">Revenue Board</field>
+            <field name="code">revenue.report</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+        <record id="payment_premium_seq" model="ir.sequence">
+            <field name="name">Payment Premium</field>
+            <field name="code">payment.premium</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+        <record id="payment_sum_seq" model="ir.sequence">
+            <field name="name">Payment Summary</field>
+            <field name="code">payment.summary</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+        <record id="payment_statement_seq" model="ir.sequence">
+            <field name="name">Payment Statement</field>
+            <field name="code">payment.statement</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record>
+        <!-- <record id="payment_tax_seq" model="ir.sequence">
+            <field name="name">Tax Report</field>
+            <field name="code">payment.tax</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">5</field>
+        </record> -->
+    </data>
+</odoo>

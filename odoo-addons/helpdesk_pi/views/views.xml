@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record id="helpdesk_ticket_view_form_inherit_sale_user1" model="ir.ui.view">
+            <field name='name'>helpdesk.ticket.form.inherit.invoicing</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk_sale.helpdesk_ticket_view_form_inherit_helpdesk_invoicing"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_order_id']" position="attributes">
+                    <attribute name="attrs">{}</attribute>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_ticket_form_erp_PI" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.form</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">   
+                <field name="email_cc" position="after">
+                    <field name="name_complaint"/>
+                    <field name="poli_com"/>
+                    <field name="phone"/>
+                    <field name="w_resolved"/>
+                </field>
+                <xpath expr="//field[@name='email_cc']" position="attributes">
+                    <attribute name="groups"/>
+                    <attribute name="string">Customer email</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_ticket_tree_erp_PI" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.tree</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="name_complaint" optional="show"/>
+                    <field name="poli_com" optional="show"/>
+                    <field name="w_resolved" optional="show"/>
+                    <field name="create_date" optional="show"/>
+                    <field name="close_date" optional="show"/>
+                </field>
+                <field name="display_name" position="after">
+                    <field name="description" class="field_description"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="helpdesk_ticket_type_tree1" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.type.tree1</field>
+            <field name="model">helpdesk.ticket.type</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_type_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="categories"/>
+                    <field name="team"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="helpdesk_sla_form1" model="ir.ui.view">
+            <field name="name">helpdesk.sla.form1</field>
+            <field name="model">helpdesk.sla</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_sla_view_form"/>
+            <field name="arch" type="xml">
+                <field name="ticket_type_id" position="after">
+                    <field name="categories"/>
+                </field>
+                <xpath expr="//form/sheet/group/group/div" position="replace">
+                    <div class="o_row">
+                        <field name="time_days"/> days<br/>
+                        <field name="time_hours"/> hours<br/>
+                        <field name="time_minutes"/>minutes<br/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="helpdesk_tickets_type_view_search" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.type.search</field>
+            <field name="model">helpdesk.ticket.type</field>
+            <field name="arch" type="xml">
+                <search string="Tickets Type Search">
+                    <field name="name"/>
+                    <field name="categories"/>
+
+                    <filter
+                        string="Enquiry"
+                        name="enquiry"
+                        domain="[('categories', '=', 'enquiry')]"
+                    />
+                    <filter
+                        string="Request"
+                        name="request"
+                        domain="[('categories', '=', 'request')]"
+                    />
+                    <filter
+                        string="Complaints"
+                        name="complaints"
+                        domain="[('categories', '=', 'complaints')]"
+                    />
+                    <filter
+                        string="Feedback"
+                        name="feedback"
+                        domain="[('categories', '=', 'feedback')]"
+                    />
+                    <filter
+                        string="Recommendations"
+                        name="recommendations"
+                        domain="[('categories', '=', 'recommendations')]"
+                    />
+                    
+                </search>
+            </field>
+        </record>
+
+        <record id="helpdesk_tickets_view_search1" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.search1</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_search"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="id"/>
+                    <field name="phone"/>
+                    <field name="poli_com"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="helpdesk_team_view_formPI" model="ir.ui.view">
+            <field name="name">helpdesk.team.form</field>
+            <field name="model">helpdesk.team</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/div[@id='productivity']" position="after">
+                    <h2>Escalation</h2>
+                    <div class="row mt16 o_settings_container" id="escalation">
+                        <div class="col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="escalate"/>
+                                <div>
+                                    <field name="escalate"/>
+                                </div>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="escalate1"/>
+                                <div>
+                                    <field name="escalate1"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </xpath>
+                
+            </field>
+        </record>
+    </data>
+</odoo>

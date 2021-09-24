@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_pay" model="ir.ui.view">
+            <field name="name">hr.expense.view.form</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_mode" position="replace">
+                    <field name="payment_mode" invisible="1"/>
+                </field>
+                <!-- <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="string">Payee</attribute>
+                </xpath> -->
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[3]/label[1]" position="replace"/>
+            </field>
+        </record>
+
+        <record id="view_pay_report" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.form</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_mode" position="replace">
+                    <field name="payment_mode" invisible="1"/>
+                    <field name="partner19" />
+                    <field name="partner_id1" string="Payee" attrs="{'invisible': [('partner19', '=', False)]}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_expense_view_form_acces" model="ir.ui.view">
+            <field name="name">hr.expense.view.form</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form" />
+            <field name="arch" type="xml"> 
+                <xpath expr="//form/header/button[@name='action_submit_expenses']" position="attributes">
+                    <attribute name="groups">client_pi.account</attribute>
+                </xpath>
+                <xpath expr="//form/header/widget[@name='attach_document']" position="attributes">
+                    <attribute name="groups">client_pi.account</attribute>
+                </xpath>
+                <xpath expr="//form[1]/header[1]/button[@name='action_submit_expenses'][2]" position="attributes">
+                    <attribute name="groups">client_pi.account</attribute>
+                </xpath>
+                <xpath expr="//form[1]/header[1]/widget[@name='attach_document'][2]" position="attributes">
+                    <attribute name="groups">client_pi.account</attribute>
+                </xpath>
+            </field>
+        </record> 
+        <record id="view_hr_expense_sheet_form_acces" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.form</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml"> 
+                <xpath expr="//form/header/button[@name='action_submit_sheet']" position="attributes">
+                    <attribute name="groups">client_pi.account</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name='approve_expense_sheets']" position="attributes">
+                    <attribute name="groups">client_pi.cfo</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name='action_sheet_move_create']" position="attributes">
+                    <attribute name="groups">client_pi.account</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name='reset_expense_sheets']" position="attributes">
+                    <attribute name="groups">client_pi.account</attribute>
+                </xpath>
+                <!-- <xpath expr="//button[@name='action_report_in_next_payslip']" position="replace"/> -->
+            </field>
+        </record> 
+
+        <record id="hr_expense_sheet_register_payment_view_form1" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.register.payment.wizard.form1</field>
+            <field name="model">hr.expense.sheet.register.payment.wizard</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_sheet_register_payment_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="after">
+                    <div class="o_attachment_preview"/>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        
+
+    </data>
+
+</odoo>
