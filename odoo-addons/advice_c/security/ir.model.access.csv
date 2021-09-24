@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_account_move_advi_user","account.move.advi","model_account_move_advi","account.group_account_user",1,1,1,0
+"access_account_move_advi_line_user","account.move.advi.line","model_account_move_advi_line","account.group_account_user",1,1,1,0

@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+
+        <record id="view_pv_tree" model="ir.ui.view">
+            <field name="name">hr.pv.tree</field>
+            <field name="model">hr.pv</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Voucher">
+                    <field name="payment_date"/>
+                    <field name="pv_num"/>
+                    <field name="bank"/>
+                    <field name="payee"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_pv_kanban" model="ir.ui.view">
+            <field name="name">hr.pv.kanban</field>
+            <field name="model">hr.pv</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="pv_num"/>
+                    <field name="payment_date"/>
+                    <field name="payee"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row mb4">
+                                    <div class="col-6">
+                                        <strong><span><field name="pv_num"/></span></strong>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <strong><i class="fa fa-clock-o" role="img" aria-label="Date" title="Date"/> <t t-esc="record.payment_date.value"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span><field name="payee"/></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <field name="amount" widget='monetary'/>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="float-right">
+                                            <field name="state" widget="label_selection" options="{'classes': {'draft': 'secondary', 'sent': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_pv_form" model="ir.ui.view">
+            <field name="name">hr.pv.form</field>
+            <field name="model">hr.pv</field>
+            <field name="arch" type="xml">
+                <form string="Register Payment" create="false" edit="false" >
+                    <header>
+                        <button name="post" class="oe_highlight" states="draft" string="Submit" type="object"/>
+                        <button name="verify" class="oe_highlight" groups="payroll_customisation.audit" attrs="{'invisible': ['|', ('state', '!=', 'posted')]}" string="Verify" type="object"/>
+                        <button name="approve" class="oe_highlight" groups="payroll_customisation.ceo" attrs="{'invisible': ['|', ('state', '!=', 'done')]}" string="Approve" type="object"/>
+                        <button name="cancel" states="draft" string="Cancel" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted,done,approve,cancelled"/>
+                    </header>
+                    <sheet>
+                        
+                        <field name="id" invisible="1"/>
+                        <div class="oe_title" attrs="{'invisible': [('state', '=', 'draft')]}">
+                            <h1><field name="pv_num"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="payee"  attrs="{'required': [('state', '=', 'draft')]}"/>
+                                <field name="bank" />
+                                <field name="payement_mode" widget="radio" />
+                            </group>
+                            <group name="right_column">
+                                <label for="amount"/>
+                                <div name="amount" class="o_row">
+                                    <field name="amount"/>
+                                    <field name="currency" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_currency"/>
+                                </div>
+                                <field name="payment_date"/>
+                                <field name="narration"/>
+                            </group>
+                           
+                        </group>
+                    </sheet>
+                    <div class="o_attachment_preview"/>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pv" model="ir.actions.act_window">
+            <field name="name">Payment Voucher</field>
+            <field name="res_model">hr.pv</field>
+			<field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="view_pv_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Payroll Payment Voucher
+              </p><p>
+                Create Payment Voucher for Payroll.
+              </p>
+            </field>
+        </record>
+
+        <record id="paperformat_portrait" model="report.paperformat">
+            <field name="name">European A4</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record> 
+
+        <report
+            id="Pv_payroll"
+            model="hr.pv" 
+            string="Print Payment Voucher"
+            report_type="qweb-pdf"
+            name="payroll_customisation.pv_payroll" 
+            file="payroll_customisation.pv_payroll"
+            paperformat="payroll_customisation.paperformat_portrait"/>
+
+        <menuitem
+            id="menu_hr_payslip_view_pv"
+            name="Payment Voucher"
+            parent="hr_payroll.menu_hr_payroll_report"
+            action="action_pv"
+            sequence="10"/>         
+    </data>
+</odoo>
+

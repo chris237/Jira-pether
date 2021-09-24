@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record model="ir.module.category" id="module_payroll_1">
+            <field name="name">Access Payroll</field>
+            <field name="description">Access level for CEO, Auditor and CFO Payroll</field>
+        </record>
+
+        <record id="finance_manager" model="res.groups">
+            <field name="name">Finance Manager</field>
+            <field name="category_id" ref="payroll_customisation.module_payroll_1"/>
+        </record>
+
+        <record id="cfo" model="res.groups">
+            <field name="name">CFO</field>
+            <field name="category_id" ref="payroll_customisation.module_payroll_1"/>
+        </record> 
+
+        <record id="ceo" model="res.groups">
+            <field name="name">CEO</field>
+            <field name="category_id" ref="payroll_customisation.module_payroll_1"/>
+        </record> 
+
+        <record id="audit" model="res.groups">
+            <field name="name">Auditor</field>
+            <field name="category_id" ref="payroll_customisation.module_payroll_1"/>
+        </record> 
+
+        
+    </data>
+
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="view_products_tree1" model="ir.ui.view">
+            <field name="name">product.template.tree1</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="supplier_taxes_id" position="before">
+                    <field name="property_account_income_id"/>
+                    <field name="property_account_expense_id"/>
+                    <field name="supplier_taxes_id1"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_products_form1" model="ir.ui.view">
+            <field name="name">product.template.product.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="supplier_taxes_id" position="after">
+                    <field name="supplier_taxes_id1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

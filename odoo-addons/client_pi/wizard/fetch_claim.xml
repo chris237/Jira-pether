@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Claims Bills -->    
+        <record id="fetch_claim_view_form" model="ir.ui.view">
+            <field name="name">hr.register.claim.wizard.form</field>
+            <field name="model">hr.register.claim.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Fetch Claims From PI">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="partner_id" required="1" context="{'default_is_company': True}"/>
+                            </group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string='Fetch Claims' name="fetch_claim" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        
+        <record id="claim_fetch_wizard_action" model="ir.actions.act_window">
+            <field name="name">Fetch Claims From PI</field>
+            <field name="res_model">hr.register.claim.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="fetch_claim_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <!-- primiums Invoices -->
+
+        <record id="fetch_premium_view_form" model="ir.ui.view">
+            <field name="name">hr.register.premium.wizard.form</field>
+            <field name="model">hr.register.premium.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Fetch Premiums From PI">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="partner_id" required="1" context="{'default_is_company': True}"/>
+                                <field name="policy_id" required="1" context="{'default_is_company': True}"/>
+                            </group>
+                            <group>
+                                <field name="poli_id"  string="Start date of the Policy"/>
+                                <field name="tags"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string='Fetch Premiums' name="fetch_premium" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="premium_fetch_wizard_action" model="ir.actions.act_window">
+            <field name="name">Fetch Premiums From PI</field>
+            <field name="res_model">hr.register.premium.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="fetch_premium_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+</odoo>

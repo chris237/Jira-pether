@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_common" name="l10n_us_check_printing" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">  
+            <link rel="stylesheet" type="text/scss" href="/client_pi/static/src/scss/report_statement.scss"/>
+        </xpath>
+    </template>
+    <template id="report_statement">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="page1">
+                            <table class="table6">
+                                <thead>
+                                    <tr>
+                                        <th colspan="5" style="text-align:center;">
+                                            <strong class="namep">
+                                                STATEMENT OF ACCOUNT FOR 
+                                                <span style="text-transform:uppercase;" t-esc="o.partner_id.name"/>
+                                                AS AT
+                                                <span style="text-transform:uppercase;" t-esc="o.mydate10"/>
+                                            </strong>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>INVOICE DATE</th>
+                                        <th>TOTAL BILL</th>
+                                        <th>PAYMENT MONTH</th>
+                                        <th>PAYMENT</th>
+                                        <th>OUTSTANDING BAL.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                        <td>
+                                            <span t-esc="l['invoice_date']"/>
+                                        </td> 
+                                        <td>
+                                            <t t-if="l['amount_bill']!=0"><span t-esc="'{0:,.2f}'.format(l['amount_bill'])"/></t> 
+                                            <t t-elif="l['amount_bill']==0"><span></span></t>
+                                        </td> 
+                                        <td>
+                                            <span t-esc="l['payment_month']"/>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['amount_paid']!=0"><span t-esc="'{0:,.2f}'.format(l['amount_paid'])"/></t> 
+                                            <t t-elif="l['amount_paid']==0"><span></span></t>
+                                        </td>
+                                        <td>
+                                            <t t-if="l['outstand_bal']!=0"><span t-esc="'{0:,.2f}'.format(l['outstand_bal'])"/></t> 
+                                            <t t-elif="l['outstand_bal']==0"><span></span></t>
+                                        </td>
+                                    </tr>
+                                    <tr> 
+                                        <td>
+                                            <strong ><B>TOTAL :</B></strong>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_amount_bill())" /></strong></B>
+                                        </td>
+                                        <td colspan="1"/>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_amount_paid())"/></strong></B>
+                                        </td>
+                                        <td>
+                                            <B><strong><span t-esc="'{0:,.2f}'.format(get_total_outstand())"/></strong></B>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
