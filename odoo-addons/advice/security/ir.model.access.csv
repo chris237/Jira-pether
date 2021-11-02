@@ -1,3 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_account_move_advice_user","account.move.advice","model_account_move_advice","account.group_account_user",1,1,1,0
-"access_account_move_advice_line_user","account.move.advice.line","model_account_move_advice_line","account.group_account_user",1,1,1,0
