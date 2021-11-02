@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_moveadvice">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <table>
+                        <tr>
+                            <td align="right"><p><span t-esc="o.number"/></p></td>
+                        </tr>
+                        <tr>
+                            <td align="right" ><p><span t-esc="time.strftime('%B %d, %Y')"/></p></td>
+                        </tr>
+                        <tr>
+                            <td><span>To,</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>The Manager,</span></td>
+                        </tr>
+                        <tr>
+                            <td><span t-esc="o.bank_id.name" />,</td>
+                        </tr>
+                        <tr>
+                            <td><span t-esc="o.bank_acc_number" />,</td>
+                        </tr>
+                        <tr>
+                            <td>.</td>
+                        </tr>
+                        <tr>
+                            <td><p><span>     Dear Sir/Madam,</span></p></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="text-center">
+                                    <strong><B>CLAIMS SETTLEMENT PAYMENT ADVICE </B></strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p><span t-esc="o.note" /></p></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-sm">
+                        <thead>
+                            <tr style="border-top: 1px solid black">
+                                <th>SN</th>
+                                <!-- <th>REFERENCE </th> -->
+                                <th>PAYEE</th>
+                                <th>BANK NAME</th>
+                                <th>BANK BRANCH</th>
+                                <th>ACCOUNT No.</th>
+                                <th>AMOUNT </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                <td>
+                                    <span t-esc="l_index+1">.</span>
+                                </td> 
+                                <!-- <td>
+                                     <span t-esc="l['pay']"/>
+                                </td> -->
+                                <td>
+                                  <span t-esc="l['name']"/>
+                                </td> 
+                                <td>
+                                  <span t-esc="l['name_bank']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="l['ifsc_code']"/>
+                                </td>
+                                <td>
+                                     <span t-esc="l['acc_no']"/>
+                                </td>
+                                <td align="right">
+                                    <span t-esc="l['bysal']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr class="border-black" style="border-bottom: 1px solid black">
+                                <td colspan="4"/>
+                                <td t-if="o.neft == True">
+                                    <strong >TOTAL :</strong>
+                                </td>
+                                <td t-if="o.neft != True">
+                                    <strong ><B>TOTAL :</B></strong>
+                                </td>
+                                <td align="right">
+                                    <B><strong><span t-esc="get_bysal_total()" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></strong></B>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p class="mt32" align="right">Yours faithfully,</p>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

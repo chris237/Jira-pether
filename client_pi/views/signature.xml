@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_signature" model="ir.ui.view">
+            <field name="name">res.users.preferences.form.simplified.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='signature']" position="before">
+                    <field name="is_sign"/>
+                    <field name="sign" widget="image" attrs="{'invisible': [['is_sign','!=',True]]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_signa" model="ir.ui.view">
+            <field name="name">res.users.preferences.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='signature']" position="before">
+                    <field name="is_sign"/>
+                    <field name="sign" widget="image" attrs="{'invisible': [['is_sign','!=',True]]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

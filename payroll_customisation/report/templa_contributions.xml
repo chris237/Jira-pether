@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+    <template id="report_assets_common1" name="payroll_customisation" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">  
+            <link rel="stylesheet" type="text/scss" href="/payroll_customisation/static/src/scss/payment_voucher.scss"/>
+        </xpath>
+    </template>
+
+    <template id="contri_payroll">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="page1">
+                            <p class="text-center titrepv" t-if="o.type_s == 'tier_1'"><strong><B>GLICO HEALTHCARE, SSNIT CONTRIBUTION</B></strong></p>
+                            <p class="text-center titrepv" t-if="o.type_s == 'tier_2'"><strong><B>GLICO MASTER TRUST OCCUPATIONAL PENSION SCHEME TIER 2 </B></strong></p>
+                            <p class="text-center titrepv" t-if="o.type_s == 'tier_3'"><strong><B>GLICO MASTER TRUST PROVIDENT FUND SCHEME (TIER 3) </B></strong></p>
+                            <p class="text-center titrepv" t-if="o.type_s == 'slip'"><strong><B>STAFF LIFE POLICY PREMIUM </B></strong></p>
+                            <p class="text-center titrepv" t-if="o.type_s == 'si'"><strong><B>STAFF INVESTMENT </B></strong></p>
+                            <p class="text-center titrepv" t-if="o.type_s == 'payee'"><strong><B>PAYEE </B></strong></p>
+                            <p class="text-center titrepv" t-if="o.type_s == 'ld'"><strong><B>LOAN DEDUCTION </B></strong></p>
+                            <p class="text-center titrepv" t-if="o.type_s == 'gw'"><strong><B>GLICO STAFF WELFARE FUND (GW) </B></strong></p>
+                            <div class="container">
+                                <div class="row ligne">
+                                    <div class="col-6"></div>
+                                    <div class="col-3" style="text-transform: uppercase;" t-if="o.number">Number : </div>
+                                    <div class="col-3 text-right"><span class="text-right" style="text-transform: uppercase;" t-field="o.number"/></div>
+                                </div>
+                                <div class="row ligne">
+                                    <div class="col-6"></div>
+                                    <div class="col-3" style="text-transform: uppercase;" t-if="o.date">Date : </div>
+                                    <div class="col-3 text-right" style="text-transform: uppercase;"><span class="text-right" t-field="o.date"/></div>
+                                </div>
+                            </div>
+                            
+                            <br/>
+                            <table class="table table-bordered" t-if="o.type_s == 'tier_1'">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">SSNIT NUMBER</th>
+                                        <th class="text-left">EMPLOYEES</th>
+                                        <th class="text-right">Basic Salary</th>
+                                        <th class="text-right">TIER 1 (13.5%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                        <t t-if="l['total'] != 0">
+                                            <td align="left" t-if="o.type_s != 'tier_3'">
+                                                <span t-esc="l['ssnit']"/>
+                                            </td>
+                                            <td align="left">
+                                                <span t-esc="l['employee']"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['basic'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['total'])"/>
+                                            </td>
+                                        </t>    
+                                    </tr>
+                                    <tr class="border-black" style="border-bottom: 1px solid black">
+                                        <td colspan="17"/>
+                                    </tr>
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td colspan="2" align ="left "><STRONG>TOTAL</STRONG></td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.basic)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.amount)"/>
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            <table class="table table-bordered" t-if="o.type_s == 'tier_2'">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">SSNIT NUMBER</th>
+                                        <th class="text-left">EMPLOYEES</th>
+                                        <th class="text-right">Basic Salary</th>
+                                        <th class="text-right">TIER 2 (5%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                        <t t-if="l['total'] != 0">
+                                            <td align="left">
+                                                <span t-esc="l['ssnit']"/>
+                                            </td>
+                                            <td align="left">
+                                                <span t-esc="l['employee']"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['basic'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['total'])"/>
+                                            </td>
+                                        </t>    
+                                    </tr>
+                                    <tr class="border-black" style="border-bottom: 1px solid black">
+                                        <td colspan="17"/>
+                                    </tr>
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td colspan="2" align ="left "><STRONG>TOTAL</STRONG></td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.basic)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.amount)"/>
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            <table class="table table-bordered" t-if="o.type_s == 'tier_3'">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">STAFF NUMBER</th>
+                                        <th class="text-left">EMPLOYEES</th>
+                                        <th class="text-right">Basic Salary</th>
+                                        <th class="text-right">PROVIDENT FUND STAFF</th>
+                                        <th class="text-right">PROVIDENT FUND EMPLOYEE</th>
+                                        <th class="text-right">ADDITIONAL TIER 3</th>
+                                        <th class="text-right" >TIER 3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                        <t t-if="l['total'] != 0">
+                                            <td align="left">
+                                                <span t-esc="l['staff']"/>
+                                            </td> 
+                                            <td align="left">
+                                                <span t-esc="l['employee']"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['basic'])"/>
+                                            </td>
+                                            <td align="right" t-if="o.type_s == 'tier_3'">
+                                                <span t-esc="'{0:,.2f}'.format(l['pf_staff'])"/>
+                                            </td>
+                                            <td align="right" t-if="o.type_s == 'tier_3'">
+                                                <span t-esc="'{0:,.2f}'.format(l['pf_empl'])"/>
+                                            </td>
+                                            <td align="right" t-if="o.type_s == 'tier_3'">
+                                                <span t-esc="'{0:,.2f}'.format(l['add_tier3'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['total'])"/>
+                                            </td>
+                                        </t>    
+                                    </tr>
+                                    <tr class="border-black" style="border-bottom: 1px solid black">
+                                        <td colspan="17"/>
+                                    </tr>
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td colspan="2" align ="left "><STRONG>TOTAL</STRONG></td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.basic)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.pf_staff)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.pf_empl)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.add_tier3)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.amount)"/>
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            <table class="table table-bordered" t-if="o.type_s == 'si'">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">EMPLOYEES</th>
+                                        <th class="text-center">Basic Salary</th>
+                                        <th class="text-center" >TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                        <t t-if="l['total'] != 0">
+                                            <td align="left">
+                                                <span t-esc="l['employee']"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['basic'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['total'])"/>
+                                            </td>
+                                        </t>    
+                                    </tr>
+                                    <tr class="border-black" style="border-bottom: 1px solid black">
+                                        <td colspan="17"/>
+                                    </tr>
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td colspan="1" align ="left "><STRONG>TOTAL</STRONG></td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.basic)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.amount)"/>
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            <table class="table table-bordered" t-if="o.type_s == 'payee'">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">EMPLOYEES</th>
+                                        <th class="text-center">TIN NUMBER</th>
+                                        <th class="text-center">Basic Salary</th>
+                                        <th class="text-center">Taxable Allowance</th>
+                                        <th class="text-center" >PAYEE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                        <t t-if="l['total'] != 0">
+                                            <td align="left">
+                                                <span t-esc="l['employee']"/>
+                                            </td> 
+                                            <td align="left">
+                                                <span t-esc="l['tin']"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['basic'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['ta'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['total'])"/>
+                                            </td>
+                                        </t>    
+                                    </tr>
+                                    <tr class="border-black" style="border-bottom: 1px solid black">
+                                        <td colspan="17"/>
+                                    </tr>
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td colspan="2" align ="left "><STRONG>TOTAL</STRONG></td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.basic)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.ta)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.amount)"/>
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            <table class="table table-bordered" t-if="o.type_s == 'gw'">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">EMPLOYEES</th>
+                                        <th class="text-right">Basic Salary</th>
+                                        <th class="text-right">1%</th>
+                                        <th class="text-right">WELFARE GH¢10</th>
+                                        <th class="text-right">PROVIDENT FUND LOAN</th>
+                                        <th class="text-right" >TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                        <t t-if="l['total'] != 0">
+                                            <td align="left">
+                                                <span t-esc="l['employee']"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['basic'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['per'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['wel'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['pfl'])"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['total'])"/>
+                                            </td>
+                                        </t>    
+                                    </tr>
+                                    <tr class="border-black" style="border-bottom: 1px solid black">
+                                        <td colspan="17"/>
+                                    </tr>
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td colspan="1" align ="left "><STRONG>TOTAL</STRONG></td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.basic)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.per)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.wel)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.pfl)"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.amount)"/>
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            <table class="table table-bordered" t-if="o.type_s == 'slip'">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">STAFF NUMBER</th>
+                                        <th class="text-left">EMPLOYEES</th>
+                                        <th class="text-right" >TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                        <t t-if="l['total'] != 0">
+                                            <td align="left">
+                                                <span t-esc="l['staff']"/>
+                                            </td> 
+                                            <td align="left">
+                                                <span t-esc="l['employee']"/>
+                                            </td>
+                                            <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['total'])"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <tr class="border-black" style="border-bottom: 1px solid black">
+                                        <td colspan="17"/>
+                                    </tr>
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td colspan="2" align ="left "><STRONG>TOTAL</STRONG></td>
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(o.amount)"/>
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                        </div>                  
+                    </div> 
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>        

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="template_advice" name="payment" inherit_id="l10n_in_hr_payroll.report_payrolladvice">
+        <xpath expr="//div[@class='page']" position="replace"> 
+            <div class="page" style="text-transform:uppercase;">
+                <table>
+                    <tr>
+                        <td><p><span t-esc="time.strftime('%m-%d-%Y')"/></p></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span>To,</span></strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span>The Manager,</span></strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span t-esc="o.bank_id.name"/>Bank</strong></td>
+                    </tr>
+                    <tr>
+                        <td><p><span>Dear Sir/Madam,</span></p></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="text-center">
+                                <strong>Payment Advice for <span t-esc="o.name"/> A/C no. <span t-esc="o.company_id.partner_id.bank_ids and o.company_id.partner_id.bank_ids[0].acc_number"/> from period  <span t-esc="get_month(o.date)['from_name']"/> to <span t-esc="get_month(o.date)['to_name']"/></strong>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><p><span t-esc="o.note"/></p></td>
+                    </tr>
+                </table>
+
+                <table class="table table-sm">
+                    <thead>
+                        <tr style="border-top: 1px solid black">
+                            <th>SI No.</th>
+                            <th>Name Of Employee </th>
+                            <th>Bank Account No.</th>
+                            <th>Bank </th>
+                            <th t-if="o.neft != True">Bank Branch</th>
+                            <th>Net Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                            <td>
+                                <span t-esc="l_index+1">.</span>
+                            </td> 
+                            <td>
+                              <span t-esc="l['name']"/>
+                            </td>
+                            <td>
+                                 <span t-esc="l['acc_no']"/>
+                            </td>
+                            <td>
+                                 <span t-esc="l['bank_name']"/>
+                            </td>
+                            <td>
+                                <span t-esc="l['ifsc_code']"/>
+                            </td>
+                            <td>
+                                <span t-esc="l['bysal']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                            </td>
+                             <!-- <td>
+                                <span t-esc="l['debit_credit']"/>
+                            </td> -->
+                        </tr>
+                        <tr class="border-black" style="border-bottom: 1px solid black">
+                            <td colspan="3"/>
+                            <td t-if="o.neft == True">
+                                <strong>Total :</strong>
+                            </td>
+                            <td t-if="o.neft != True" colspan="2">
+                                <strong>Total :</strong>
+                            </td>
+                            <td colspan="3">
+                                <strong><span t-esc="get_bysal_total()" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <p>Yours Sincerely</p>
+                <p>.</p>
+                <br/>
+                <div class="container">
+                    <div class="row">
+                    <div class="col-6">------------------------------</div>
+                    <div class="col-6" align="right">------------------------------</div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    
+
+</odoo>

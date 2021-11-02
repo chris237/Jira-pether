@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_common" name="l10n_us_check_printing" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">  
+            <link rel="stylesheet" type="text/scss" href="/client_pi/static/src/scss/report_check_top.scss"/>
+        </xpath>
+    </template>
+<template id="reporttax">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="page1">
+                        <div class="">
+                            <t t-if="o.type_report=='claim'">
+                                <p class="text-center titleclaim">
+                                    <strong><B>CLAIMS WITHHOLDING TAX FOR <span style="text-transform:uppercase;" t-esc="o.month"/> - <span style="text-transform:uppercase;" t-esc="o.year"/> </B></strong>
+                                </p>
+                            </t>
+                            <t t-elif="o.type_report == 'expense'">
+                                <p class="text-center titleclaim">
+                                    <strong><B> EXPENSE TAX FOR  <span style="text-transform:uppercase;" t-field="o.month"/> - <span style="text-transform:uppercase;" t-esc="o.year"/> </B></strong>
+                                </p>
+                            </t>
+                            
+                        </div>
+                        <table>
+                            <tr>
+                                <td align="left"><p>Reference      :<span t-esc="o.number"/></p></td>
+                            </tr>
+                            <tr>
+                                <td align="left" ><p>Printing Date :<span t-esc="o.date"/></p></td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-sm">
+                            <thead>
+                                <tr style="border-top: 1px solid black">
+                                    <th>DATE</th>
+                                    <th>DETAILS </th>
+                                    <th class="text-right">AMT APPROVED</th>
+                                    <th class="text-right">TAX %</th>
+                                    <th class="text-right">AMT PAID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="get_detail(o.line_ids)" t-as="l">
+                                    <t t-if="l['amount_paid'] != 0">
+                                        <td>
+                                            <span t-esc="l['date']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="l['partner_id']"/>
+                                        </td> 
+                                        <td align="right">
+                                            <span t-esc="'{0:,.2f}'.format(l['amount_app'])"/>
+                                        </td>
+                                        <td align="right">
+                                            <span t-esc="l['tax']"/>
+                                        </td>
+                                        <td align="right">
+                                                <span t-esc="'{0:,.2f}'.format(l['amount_paid'])"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <tr class="border-black" style="border-bottom: 1px solid black">
+                                    <td colspan="3"/>
+                                    <td >
+                                        <strong ><B>TOTAL :</B></strong>
+                                    </td>
+                                    <td align="right">
+                                        <B><strong><span t-esc="'{0:,.2f}'.format(get_bysal_total())"/></strong></B>
+                                    </td>
+                                </tr> 
+                            </tbody>
+                        </table>
+                        
+                        <p class="mt32" align="right">Yours faithfully,</p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

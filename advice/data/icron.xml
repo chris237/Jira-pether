@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">        
+        <record id="seq_payment_manual" model="ir.sequence">
+            <field name="name">manual Advice</field>
+            <field name="code">payment.manual</field>
+            <field name="padding">3</field>
+        </record>
+
+        <record id="account_payment_method_checque" model="account.payment.method">
+            <field name="name">Cheque</field>
+            <field name="code">check_printing</field>
+            <field name="payment_type">outbound</field>
+        </record>
+
+        <record model="ir.actions.server" id="action_account_print_checks">
+            <field name="name">Print Cheque</field>
+            <field name="model_id" ref="account.model_account_payment"/>
+            <field name="binding_model_id" ref="account.model_account_payment" />
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+if records:
+    action = records.print_checks()
+            </field>
+        </record>
+    </data>
+</odoo>    
